@@ -5,7 +5,7 @@
 
 DWORD WINAPI ThreadProc(CONST LPVOID lpParam)
 {
-    std::cout << "Поток № " << (int)lpParam << " выполняет свою работу\n";
+    std::cout << "Поток № " + std::to_string((int)lpParam) + " выполняет свою работу\n";;
     ExitThread(0); 
 }
 
