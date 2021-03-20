@@ -13,8 +13,8 @@ struct Args
 {
 	char* inputFileName;
 	char* outputFileName;
-	size_t threadsNumber = 0;
-	size_t coresNumber = 0;
+	int threadsNumber = 0;
+	int coresNumber = 0;
 };
 
 Args ParseArgs(int argc, char* argv[])
@@ -85,7 +85,7 @@ DWORD WINAPI ThreadProc(LPVOID params)
 	ExitThread(0);
 }
 
-vector<HorizonStripeParams> GetHorizonStripesParams(BMP bmp, int stripesNumber)
+vector<HorizonStripeParams> GetHorizonStripesParams(BMP& bmp, int stripesNumber)
 {
 	vector<HorizonStripeParams> blurParams;
 	int stripeWidth = bmp.TellWidth() / stripesNumber;
@@ -137,7 +137,7 @@ int main(int argc, char* argv[])
 
 	bmp.WriteToFile(args.outputFileName);
 
-	cout << "runtime = " << clock() / 1000.0 << endl;
+	cout << "runtime = " << clock() << endl;
 
 	return 0;
 }
