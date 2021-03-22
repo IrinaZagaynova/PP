@@ -3,7 +3,7 @@
 #include <windows.h>
 #include <vector>
 #include <iostream>
-#include <ctime>
+#include <chrono>
 #define _USE_MATH_DEFINES 
 #include <math.h>
 
@@ -128,6 +128,8 @@ void Blur(BMP& bmp, int threadsNumber, int coresNumber)
 
 int main(int argc, char* argv[])
 {
+	const std::chrono::steady_clock::time_point startTime = std::chrono::steady_clock::now();
+
 	auto args = ParseArgs(argc, argv);
 
 	BMP bmp;
@@ -137,7 +139,9 @@ int main(int argc, char* argv[])
 
 	bmp.WriteToFile(args.outputFileName);
 
-	cout << "runtime = " << clock() << endl;
+	std::chrono::steady_clock::time_point endTime = std::chrono::steady_clock::now();
+	const auto runtime = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
+	cout << "runtime = " << runtime << endl;
 
 	return 0;
 }
