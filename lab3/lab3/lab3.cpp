@@ -16,11 +16,15 @@ DWORD WINAPI ThreadProc(LPVOID lpParam)
 {
     ThreadParams* threadParams = (ThreadParams*)lpParam;
 
-    for (size_t i = 0; i < 1000000; i++)
+    for (size_t i = 0; i < 20; i++)
     {
+        for (size_t j = 0; j < 20000000; j++)
+        {
+            int temp = j;
+        }
         std::chrono::steady_clock::time_point endTime = std::chrono::steady_clock::now();
         const auto runtime = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - threadParams->startTime).count();
-        *threadParams->ostrm << std::to_string((size_t)threadParams->threadNumber) + "|" + std::to_string(runtime) + "\n";   
+        *threadParams->ostrm << std::to_string(runtime) + "\n";   
     }
 
     delete threadParams;
@@ -30,6 +34,9 @@ DWORD WINAPI ThreadProc(LPVOID lpParam)
 
 int main(int argc, char* argv[])
 {
+    char ch;
+    std::cin >> ch;
+
     const std::chrono::steady_clock::time_point startTime = std::chrono::steady_clock::now();
 
     size_t threadCount = 2;
