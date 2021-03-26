@@ -106,11 +106,9 @@ vector<HorizonStripeParams> GetHorizonStripesParams(BMP& bmp, int stripesNumber)
 	return blurParams;
 }
 
-void Blur(BMP& bmp, int threadsNumber, int coresNumber)
+void Blur(vector<HorizonStripeParams>& blurParams, int threadsNumber, int coresNumber)
 {
 	HANDLE* handles = new HANDLE[threadsNumber];
-
-	vector<HorizonStripeParams> blurParams = GetHorizonStripesParams(bmp, threadsNumber);
 
 	for (int i = 0; i < threadsNumber; i++)
 	{
@@ -135,7 +133,8 @@ int main(int argc, char* argv[])
 	BMP bmp;
 	bmp.ReadFromFile(args.inputFileName);
 
-	Blur(bmp, args.threadsNumber, args.coresNumber);
+	vector<HorizonStripeParams> blurParams = GetHorizonStripesParams(bmp, args.threadsNumber);
+	Blur(blurParams, args.threadsNumber, args.coresNumber);
 
 	bmp.WriteToFile(args.outputFileName);
 
